@@ -28,6 +28,14 @@
 
 <url>https://crankuptheamps.com/docs/amps-integrations/kafka/intro</url>
 
+<licenses>
+    <license>
+        <name>Apache License, Version 2.0</name>
+        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+    </license>
+</licenses>
+
 <scm>
     <connection>scm:git:https://github.com/60East/amps-integration-apache-kafka.git</connection>
     <developerConnection>scm:git:git@github.com:60East/amps-integration-apache-kafka.git</developerConnection>
@@ -42,6 +50,8 @@
     <jackson.version>2.16.1</jackson.version>
     <slf4j.version>2.0.17</slf4j.version>
     <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+    <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
+    <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
 </properties>
 
 <dependencies>
@@ -106,9 +116,41 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.8.1</version>
             <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
+                <source>${maven.compiler.source}</source>
+                <target>${maven.compiler.target}</target>
             </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${maven.source.plugin.version}</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven.javadoc.plugin.version}</version>
+            <configuration>
+                <doclint>none</doclint>
+                <source>${maven.compiler.source}</source>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>attach-javadocs</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>

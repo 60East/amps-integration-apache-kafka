@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AMPSConfig>
+    <Name>AMPS-Kafka-Tests-Replica</Name>
+    <Group>KafkaConnectorTests</Group>
+
+    <Transports>
+        <Transport>
+            <Name>any-tcp</Name>
+            <Type>tcp</Type>
+            <InetAddr>9009</InetAddr>
+            <Protocol>amps</Protocol>
+            <ReuseAddr>true</ReuseAddr>
+        </Transport>
+        <Transport>
+            <Name>any-ws</Name>
+            <Type>tcp</Type>
+            <InetAddr>9010</InetAddr>
+            <Protocol>websocket</Protocol>
+            <ReuseAddr>true</ReuseAddr>
+        </Transport>
+        <Transport>
+            <Name>amps-replication</Name>
+            <Type>amps-replication</Type>
+            <InetAddr>10005</InetAddr>
+            <ReuseAddr>true</ReuseAddr>
+        </Transport>
+    </Transports>
+
+    <Replication>
+        <Destination>
+            <Topic>
+                <Name>SourceTest</Name>
+                <MessageType>json</MessageType>
+            </Topic>
+            <Name>AMPS-Kafka-Tests</Name>
+            <PassThrough>.*</PassThrough>
+            <Group>KafkaConnectorTests</Group>
+            <SyncType>sync</SyncType>
+            <Transport>
+                <InetAddr>10004</InetAddr>
+                <Type>amps-replication</Type>
+            </Transport>
+        </Destination>
+    </Replication>
+
+    <Admin>
+        <InetAddr>8086</InetAddr>
+        <SQLTransport>any-ws</SQLTransport>
+        <FileName>./amps-files/kafka-connector-tests-replica/stats.db</FileName>
+        <Interval>1s</Interval>
+    </Admin>
+
+    <Logging>
+        <Target>
+            <Protocol>stdout</Protocol>
+            <Level>warning</Level>
+            <IncludeErrors>00-0015</IncludeErrors>
+        </Target>
+        <Target>
+            <Protocol>file</Protocol>
+            <FileName>./amps-files/kafka-connector-tests-replica/logs/kafka_connector_tests_replica.log</FileName>
+            <RotationThreshold>10MB</RotationThreshold>
+            <Level>info</Level>
+        </Target>
+    </Logging>
+
+    <TransactionLog>
+        <JournalDirectory>./amps-files/kafka-connector-tests-replica/journals</JournalDirectory>
+        <JournalSize>20MB</JournalSize>
+        <Topic>
+            <Name>.*</Name>
+            <MessageType>json</MessageType>
+        </Topic>
+    </TransactionLog>
+</AMPSConfig>

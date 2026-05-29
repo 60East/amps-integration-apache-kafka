@@ -1,0 +1,23 @@
+{
+    "name": "amps-kafka-source",
+    "config": {
+        "connector.class": "com.crankuptheamps.kafka.AMPSKafkaSource",
+        "tasks.max": "1",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+        "header.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "clientFactoryClass": "com.crankuptheamps.kafka.AMPSBasicClientFunction",
+        "clientName": "KafkaSource",
+        "uri": "tcp://localhost:9007/amps/json",
+        "command": "sow_and_subscribe",
+        "ampsTopic": "Orders",
+        "filter": "/symbol IN ('IBM', 'MSFT')",
+        "options": "projection=[/symbol,avg(/price) as /avg_price, avg(/price*/qty) as /avg_total],grouping=[/symbol],conflation=1s",
+        "subscriptionId": "Sub-100",
+        "cmdTypeFilter": "9",
+        "maxBuffers": "10",
+        "maxBatch": "1000",
+        "pruneTimeThreshold": "300000",
+        "eventHeaders": "topicHeader,timestamp"
+    }
+}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<modelVersion>4.0.0</modelVersion>
+<groupId>com.crankuptheamps.kafka</groupId>
+<artifactId>amps-kafka-connector</artifactId>
+<version>1.2.0</version>
+<packaging>jar</packaging>
+
+<name>AMPS Kafka Connector</name>
+<description>
+    AMPS Kafka connector by 60East Technologies, Inc. 
+</description>
+
+<organization>
+    <name>60East Technologies, Inc.</name>
+    <url>https://crankuptheamps.com</url>
+</organization>
+
+<developers>
+    <developer>
+        <organization>60East Technologies, Inc.</organization>
+        <organizationUrl>https://crankuptheamps.com</organizationUrl>
+    </developer>
+</developers>
+
+<url>https://crankuptheamps.com/docs/amps-integrations/kafka/intro</url>
+
+<scm>
+    <connection>scm:git:https://github.com/60East/amps-integration-apache-kafka.git</connection>
+    <developerConnection>scm:git:git@github.com:60East/amps-integration-apache-kafka.git</developerConnection>
+    <url>https://github.com/60East/amps-integration-apache-kafka</url>
+</scm>
+
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <junit.version>4.13.2</junit.version>
+    <jackson.version>2.16.1</jackson.version>
+    <slf4j.version>2.0.17</slf4j.version>
+    <maven.gpg.plugin.version>3.2.7</maven.gpg.plugin.version>
+</properties>
+
+<dependencies>
+    <!-- Kafka Connect API -->
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>connect-api</artifactId>
+        <version>3.2.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- Logging -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.crankuptheamps/amps-client -->
+    <dependency>
+        <groupId>com.crankuptheamps</groupId>
+        <artifactId>amps-client</artifactId>
+        <version>5.3.5.0</version>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka-clients</artifactId>
+        <version>3.2.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+</dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven.gpg.plugin.version}</version>
+            <executions>
+                <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>sign</goal>
+                    </goals>
+                    <configuration>
+                        <useAgent>true</useAgent>
+                        <keyname>${gpg.keyname}</keyname>
+                        <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                        <gpgArguments>
+                            <arg>--batch</arg>
+                            <arg>--pinentry-mode</arg>
+                            <arg>loopback</arg>
+                        </gpgArguments>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <version>0.8.0</version>
+            <configuration>
+                <autoPublish>false</autoPublish>
+                <checksums>required</checksums>
+                <skipPublishing>true</skipPublishing>
+                <outputFilename>maven-upload-bundle-kafka-${project.version}.zip</outputFilename>
+            </configuration>
+        </plugin>
+    </plugins>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
+</build>
+</project>

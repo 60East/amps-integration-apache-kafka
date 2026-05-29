@@ -1,0 +1,16 @@
+{
+    "name": "amps-kafka-source",
+    "config": {
+        "connector.class": "com.crankuptheamps.kafka.AMPSKafkaSource",
+        "tasks.max": "1",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+        "header.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "clientFactoryClass": "com.crankuptheamps.kafka.AMPSBasicClientFunction",
+        "clientName": "KafkaSource",
+        "uri": "tcp://localhost:9007/amps/json",
+        "ampsTopic": "Test.*",
+        "maxBuffers": "10",
+        "maxBatch": "1000"
+    }
+}

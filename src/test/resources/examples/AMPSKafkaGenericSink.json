@@ -1,0 +1,17 @@
+{
+    "name": "amps-kafka-sink",
+    "config": {
+        "connector.class": "com.crankuptheamps.kafka.AMPSKafkaSink",
+        "topics": "SourceTest",
+        "tasks.max": "1",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+        "header.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "clientFactoryClass": "com.crankuptheamps.kafka.AMPSBasicClientFunction",
+        "clientName": "KafkaSink",
+        "uri": "tcp://localhost:9007/amps/json",
+        "ampsTopic": "SinkTest",
+        "maxBatch": "1000",
+        "useTopicHeader": "false"
+    }
+}

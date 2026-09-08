@@ -40,6 +40,10 @@
                 <Name>SourceTest</Name>
                 <MessageType>json</MessageType>
             </Topic>
+            <Topic>
+                <Name>SinkTestFailover.*</Name>
+                <MessageType>json</MessageType>
+            </Topic>
             <Name>AMPS-Kafka-Tests-Replica</Name>
             <PassThrough>.*</PassThrough>
             <Group>KafkaConnectorTests</Group>

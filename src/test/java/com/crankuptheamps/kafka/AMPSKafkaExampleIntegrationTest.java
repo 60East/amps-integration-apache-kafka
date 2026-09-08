@@ -318,7 +318,10 @@ public class AMPSKafkaExampleIntegrationTest {
 
         HAClient subscriber = null;
         try {
-            subscriber = newHAClient("KafkaFailoverSub" + run);
+            subscriber = new HAClient("KafkaFailoverSub" + run);
+            DefaultServerChooser sc = new DefaultServerChooser();
+            sc.add(AMPS_FAILOVER_SECONDARY_URI);
+            subscriber.setServerChooser(sc);
             subscriber.setBookmarkStore(new MemoryBookmarkStore());
             subscriber.connectAndLogon();
             AMPSMessageHandler handler = new AMPSMessageHandler(messageCount);
